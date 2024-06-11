@@ -1,15 +1,9 @@
-import click
 from database.setup import create_tables
-from models.route import Route
+from cli.main import cli
 
-@click.group()
-def cli():
-    pass
-
-@cli.command()
-def initdb():
+def main():
     create_tables()
-    click.echo('Initialized the database')
-
-if __name__ == '__main__':
     cli()
+
+if __name__ == "__main__":
+    main()
