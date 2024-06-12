@@ -19,4 +19,13 @@ class Stop:
             conn.commit()
             conn.close()
     
-    
+    @staticmethod
+    def get_by_id(stop_id):
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM stops WHERE id = ?', (stop_id,))
+        row = cursor.fetchone()
+        conn.close()
+        if row:
+            return Stop(row['name'], row['location'], row['id'])
+        return None
