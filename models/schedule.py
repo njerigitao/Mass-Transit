@@ -27,3 +27,20 @@ class Schedule:
                  (self.route_id, self.stop_id, self.arrival_time, self.departure_time, self.id))
         conn.commit()
         conn.close()
+    
+    @staticmethod
+    def get_by_id(schedule_id):
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM schedules WHERE id = ?', (schedule_id))
+        row = cursor.fetchone()
+        conn.close()
+        if row:
+            return Schedule(row['route_id'], row['stop_id'], row['arrival_time'], row['departure_time'], row['id'])
+        return None
+    
+    def get_route(self):
+        return Route.get_by_id(self.route_id)
+    
+    def get_stop(self):
+        return Stop.get_by_id(self.stop_id)
