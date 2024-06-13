@@ -28,16 +28,16 @@ def create_stop(name, location):
 @click.command()
 @click.option('--route_id', prompt='Route ID', help='The ID of the route.', type=int)
 @click.option('--stop_id', prompt='Stop ID', help='The ID of the stop.', type=int)
-@click.option('--arrival', prompt='Arrival time', help='The arrival time at the stop.')
-@click.option('--departure', prompt='Departure time', help='The departure time from the stop.')
-def create_schedule(route_id, stop_id, arrival, departure):
-    schedule = Schedule(route_id, stop_id, arrival, departure)
-    schedule.save()
-    click.echo(f'Schedule created with ID {schedule.id}')
+@click.option('--arrival_time', prompt='Arrival time', help='The arrival time at the stop.')
+@click.option('--departure_time', prompt='Departure time', help='The departure time from the stop.')
+def create_schedules(route_id, stop_id, arrival_time, departure_time):
+    schedules = Schedule(route_id, stop_id, arrival_time, departure_time)
+    schedules.save()
+    click.echo(f'Schedule created with ID {schedules.id}')
 
 cli.add_command(create_route)
 cli.add_command(create_stop)
-cli.add_command(create_schedule)
+cli.add_command(create_schedules)
 
 if __name__ == '__main__':
     create_tables()
