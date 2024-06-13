@@ -29,10 +29,10 @@ class Schedule:
         conn.close()
     
     @staticmethod
-    def get_by_id(schedules):
+    def get_by_id(schedule_id):
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('SELECT * FROM schedules WHERE id = ?', (schedules.id))
+        cursor.execute('SELECT * FROM schedules WHERE id = ?', (schedule_id,))
         row = cursor.fetchone()
         conn.close()
         if row:

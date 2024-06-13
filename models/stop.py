@@ -20,10 +20,10 @@ class Stop:
             conn.close()
     
     @staticmethod
-    def get_by_id(stop):
+    def get_by_id(stop_id):
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('SELECT * FROM stops WHERE id = ?', (stop.id,))
+        cursor.execute('SELECT * FROM stops WHERE id = ?', (stop_id,))
         row = cursor.fetchone()
         conn.close()
         if row:

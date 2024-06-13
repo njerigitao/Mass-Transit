@@ -20,13 +20,13 @@ class Route:
             conn.commit()
             conn.close()
         
-        @staticmethod
-        def get_by_id(route_id):
-            conn = get_db_connection()
-            cursor = conn.cursor()
-            cursor.execute('SELECT * FROM routes WHERE id = ?', (route_id,))
-            row = cursor.fetchone()
-            conn.close()
-            if row:
-                return Route(row['name'], row['start_location'], row['end_location'], row['id'])
-            return None
+    @staticmethod
+    def get_by_id(route_id):
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM routes WHERE id = ?', (route_id,))
+        row = cursor.fetchone()
+        conn.close()
+        if row:
+            return Route(row['name'], row['start_location'], row['end_location'], row['id'])
+        return None
