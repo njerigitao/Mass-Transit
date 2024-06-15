@@ -33,5 +33,9 @@ def create_tables():
         )
     ''')
 
+    def update_schedules_table():
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
     conn.commit()
     conn.close()
