@@ -27,6 +27,13 @@ class Schedule:
                  (self.route_id, self.stop_id, self.arrival_time, self.departure_time, self.id))
         conn.commit()
         conn.close()
+
+    def delete(self):
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM schedules WHERE id = ?', (self.id,))
+        conn.commit()
+        conn.close()
     
     @staticmethod
     def get_by_id(schedule_id):
@@ -38,6 +45,16 @@ class Schedule:
         if row:
             return Schedule(row['route_id'], row['stop_id'], row['arrival_time'], row['departure_time'], row['id'])
         return None
+    
+    @staticmethod
+    def get_all():
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM schedules')
+        rows = cursor.fetchall()
+        conn.close()
+        return [Schedule(row['route_id'], row['stop_id'], row['arrival_time'], row['departure_time'], row['id']) for row in rows]
+
     
     def get_route(self):
         return Route.get_by_id(self.route_id)

@@ -19,6 +19,14 @@ class Stop:
             conn.commit()
             conn.close()
     
+    def delete(self):
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM stops WHERE id = ?', (self.id,))
+        conn.commit()
+        conn.close()
+
+    
     @staticmethod
     def get_by_id(stop_id):
         conn = get_db_connection()
@@ -29,3 +37,12 @@ class Stop:
         if row:
             return Stop(row['name'], row['location'], row['id'])
         return None
+    
+    @staticmethod
+    def get_all():
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM stops')
+        rows = cursor.fetchall()
+        conn.close()
+        return [Stop(row['name'], row['location'], row['id']) for row in rows]
