@@ -19,6 +19,13 @@ class Route:
                             (self.name, self.start_location, self.end_location, self.id))
             conn.commit()
             conn.close()
+
+    def delete(self):
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM routes WHERE id = ?', (self.id,))
+        conn.commit()
+        conn.close()
         
     @staticmethod
     def get_by_id(route_id):
@@ -30,3 +37,12 @@ class Route:
         if row:
             return Route(row['name'], row['start_location'], row['end_location'], row['id'])
         return None
+    
+    @staticmethod
+    def get_all():
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM routes')
+        rows = cursor.fetchall()
+        conn.close()
+        return [Route(row['name'], row['start_location'], row['end_location'], row['id']) for row in rows]
